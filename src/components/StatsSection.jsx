@@ -2,6 +2,7 @@
 
 import { Briefcase, ChartColumn, Magnifier, Star } from "@gravity-ui/icons";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 const stats = [
   {

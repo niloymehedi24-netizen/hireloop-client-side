@@ -40,6 +40,7 @@ export default function SignUp() {
         name: form.name,
         email: form.email,
         password: form.password,
+        callbackURL: "/",
       });
 
       if (result?.error) {

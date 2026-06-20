@@ -3,9 +3,27 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
+import { authClient, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session, isPending } = useSession();
+  // console.log(session, isPending);
+  const user = session?.user;
+
+  const handleSignOut = async () => {
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            window.location.href = "/";
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Sign out failed:", error);
+    }
+  };
 
   const navLinks = [
     {
@@ -51,12 +69,21 @@ export default function Navbar() {
           <div className="h-8 w-px bg-white/15"></div>
 
           {/* Auth */}
-          <Link
-            href="/login"
-            className="font-medium text-violet-400 transition hover:text-violet-300"
-          >
-            Sign In
-          </Link>
+          {user ? (
+            <>
+              Hi, {user?.name}!
+              <Button onClick={handleSignOut} variant="ghost">
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <Link
+              href="/auth/signin"
+              className="font-medium text-violet-400 transition hover:text-violet-300"
+            >
+              Sign In
+            </Link>
+          )}
 
           <Button
             as={Link}
