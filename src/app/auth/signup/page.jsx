@@ -4,10 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import { Description, Label, Radio, RadioGroup } from "@heroui/react";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("seeker");
 
   const [form, setForm] = useState({
     name: "",
@@ -40,6 +42,7 @@ export default function SignUp() {
         name: form.name,
         email: form.email,
         password: form.password,
+        role,
         callbackURL: "/",
       });
 
@@ -148,6 +151,37 @@ export default function SignUp() {
                 {showPassword ? "🙈" : "👁"}
               </button>
             </div>
+          </div>
+
+          {/* Role Selection */}
+
+          <div className="flex flex-col gap-4">
+            <Label>Subscription plan</Label>
+            <RadioGroup
+              defaultValue="seeker"
+              name="role"
+              orientation="horizontal"
+              onChange={(value) => {
+                setRole(value);
+              }}
+            >
+              <Radio selected value="seeker">
+                <Radio.Content>
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  Job Seeker
+                </Radio.Content>
+              </Radio>
+              <Radio value="recruiter">
+                <Radio.Content>
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  Recruiter
+                </Radio.Content>
+              </Radio>
+            </RadioGroup>
           </div>
 
           {/* Error */}
