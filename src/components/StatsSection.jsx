@@ -58,13 +58,7 @@ export default function StatsSection() {
             return (
               <article
                 key={item.label}
-                className="
-                  rounded-[32px]
-                  border border-white/10
-                  bg-white/3
-                  p-8
-                  backdrop-blur-xl
-                "
+                className="rounded-[32px] border border-white/10 bg-white/3 p-8 backdrop-blur-xl"
               >
                 <Icon className="mb-16 h-8 w-8 text-white" />
 

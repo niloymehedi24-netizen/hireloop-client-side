@@ -126,7 +126,7 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/login"
+                href="/auth/signin"
                 className="block rounded-lg px-3 py-3 text-violet-400"
               >
                 Sign In
