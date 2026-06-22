@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@heroui/react";
+import { Button, toast } from "@heroui/react";
 
 import CompanyCard from "./CompanyCard";
 import FormSection from "./FormSection";
 import JobInfoSection from "./JobInfoSection";
+import { createJobs } from "@/lib/actions/jobs";
+import { redirect } from "next/navigation";
 
 export default function JobForm() {
   const [form, setForm] = useState({
@@ -20,6 +22,16 @@ export default function JobForm() {
     remote: false,
     deadline: "",
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await createJobs();
+    if (res.insertedId) {
+      toast.success("Job Posted Successfully");
+      redirect("/dashboard/recruiter");
+    }
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10">
@@ -40,7 +52,7 @@ export default function JobForm() {
 
       {/* Grid */}
 
-      <div className="grid gap-8 lg:grid-cols-3">
+      <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-3">
         {/* Left */}
 
         <div className="space-y-8 lg:col-span-2">
@@ -76,12 +88,15 @@ export default function JobForm() {
               publishing.
             </p>
 
-            <Button className="mt-8 h-12 w-full bg-linear-to-r from-violet-600 to-purple-500 text-white">
+            <Button
+              type="submit"
+              className="mt-8 h-12 w-full bg-linear-to-r from-violet-600 to-purple-500 text-white"
+            >
               Publish Job
             </Button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

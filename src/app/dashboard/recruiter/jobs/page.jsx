@@ -1,11 +1,12 @@
-import React from "react";
+import JobsTable from "@/components/recruiter/JobsTable";
+import { getCompanyJobs } from "@/lib/api/jobs";
 
-const RecruiterJobs = () => {
+export default async function RecruiterJobs() {
+  const jobs = await getCompanyJobs();
+
   return (
-    <div>
-      <h2>Recruiter Jobs</h2>
+    <div className="space-y-8">
+      <JobsTable jobs={jobs} />
     </div>
   );
-};
-
-export default RecruiterJobs;
+}
